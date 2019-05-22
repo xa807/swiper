@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="width: 60%; height: 800px;">
+        <h1 class="text-center">用户注册页面</h1>
+        <form class="form-horizontal"
+              action="/user/regist/" method="post">
+            <div class="form-group">
+                <label class="control-label col-md-4" for="phonenum">手机号码:</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="phonenum" name="phonenum"
+                           placeholder="输入您的手机号" value="{{ form.phonenum.value }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="code">验证码:</label>
+                <div class="col-md-4">
+                    <input class="form-control" id="code" name="code"
+                           placeholder="验证码" value="{{ form.code.value }}">
+                </div>
+                <div class="col-md-4">
+                    <button type="button" onclick="getCode(this)" class="btn btn-info">获取验证码</button>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-4" for="nickname">别名:</label>
+                <div class="col-md-8">
+                    <input class="form-control" id="nickname" name="nickname"
+                           placeholder="输入您的昵称" value="{{ form.nickname.value }}">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-md-offset-4 col-md-8">
+                    <button type="submit" class="btn btn-default">注册</button>
+                </div>
+            </div>
+
+        </form>
+        <div class="text-danger" style="margin-left: 200px">
+            {{ errors }}
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        var delay = 60
+        var interval_id = 0
+
+        function getCode(btn) {
+            if(delay != 60) return
+
+            phonenum = $('#phonenum').val()
+            url = '/user/code/?phonenum=' + phonenum
+            $.getJSON(url, function (data) {
+                if (data.code == 200) {
+                    $(btn).addClass('disabled')
+                    interval_id = setInterval(function () {
+                        btn.innerHTML = delay + '秒'
+                        delay--
+                        if (delay == 0) {
+                            clearInterval(interval_id)
+                            $(btn).removeClass('disabled')
+                            delay = 60;
+                             btn.innerHTML = '获取验证码'
+                        }
+                    }, 1000)
+                }
+            })
+
+        }
+
+    </script>
+{% endblock %}

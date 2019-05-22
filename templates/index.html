@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div style="width: 60%; height: 800px;">
+        <h1 class="text-center">主页面</h1>
+
+    </div>
+
+{% endblock %}
+
+{% block js %}
+    <script>
+        var delay = 60
+        var interval_id = 0
+
+        function getCode(btn) {
+            if(delay != 60) return
+
+            phonenum = $('#phonenum').val()
+            url = '/user/code/?phonenum=' + phonenum
+            $.getJSON(url, function (data) {
+                if (data.code == 200) {
+                    $(btn).addClass('disabled')
+                    interval_id = setInterval(function () {
+                        btn.innerHTML = delay + '秒'
+                        delay--
+                        if (delay == 0) {
+                            clearInterval(interval_id)
+                            $(btn).removeClass('disabled')
+                            delay = 60;
+                             btn.innerHTML = '获取验证码'
+                        }
+                    }, 1000)
+                }
+            })
+
+        }
+
+    </script>
+{% endblock %}
