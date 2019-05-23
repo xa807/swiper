@@ -17,16 +17,16 @@ def get_bucket():
 
 def upload_file(filename):
 
-    key = uuid.uuid4().hex
+    key = uuid.uuid4().hex  # 生成object_name(OSS存储空间使用的文件名)
 
     try:
         bucket = get_bucket()
         # <yourLocalFile>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt
-        result = bucket.put_object_from_file(key, filename)
-        print(result)
+        bucket.put_object_from_file(key, filename)
 
     except Exception as e:
         print('上传文件失败',  e)
+        return None
 
     return key
 
@@ -34,9 +34,8 @@ def upload_file(filename):
 def download_file(key, filename):
     # 下载key的文件到本地filename文件中
     try:
-        bucket = get_bucket()
         # <yourLocalFile>由本地文件路径加文件名包括后缀组成，例如/users/local/myfile.txt
-        bucket.get_object_to_file(key, filename)
+        get_bucket().get_object_to_file(key, filename)
     except Exception as e:
         print('上传文件失败',  e)
 

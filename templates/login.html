@@ -2,9 +2,9 @@
 
 {% block content %}
     <div style="width: 60%; height: 800px;">
-        <h1 class="text-center">用户注册页面</h1>
+        <h1 class="text-center">用户登录页面</h1>
         <form class="form-horizontal"
-              action="/user/regist/" method="post">
+              action="/user/login/" method="post">
             <div class="form-group">
                 <label class="control-label col-md-4" for="phonenum">手机号码:</label>
                 <div class="col-md-8">
@@ -22,16 +22,10 @@
                     <button type="button" onclick="getCode(this)" class="btn btn-info">获取验证码</button>
                 </div>
             </div>
-            <div class="form-group">
-                <label class="control-label col-md-4" for="nickname">别名:</label>
-                <div class="col-md-8">
-                    <input class="form-control" id="nickname" name="nickname"
-                           placeholder="输入您的昵称" value="{{ form.nickname.value }}">
-                </div>
-            </div>
+
             <div class="form-group">
                 <div class="col-md-offset-4 col-md-8">
-                    <button type="submit" class="btn btn-default">注册</button>
+                    <button type="submit" class="btn btn-default">登录</button>
                 </div>
             </div>
 
@@ -49,7 +43,7 @@
         var interval_id = 0
 
         function getCode(btn) {
-            if(delay != 60) return
+            if (delay != 60) return
 
             phonenum = $('#phonenum').val()
             url = '/user/code/?phonenum=' + phonenum
@@ -65,7 +59,7 @@
                             $(btn).removeClass('disabled')
                             $(btn).addClass('btn-info')
                             delay = 60;
-                             btn.innerHTML = '获取验证码'
+                            btn.innerHTML = '获取验证码'
                         }
                     }, 1000)
                 }
