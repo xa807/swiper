@@ -105,24 +105,47 @@
 <script src="/static/js/jquery.min.js"></script>
 <script src="/static/js/bootstrap.min.js"></script>
 <script>
-
+    var image_path;
     function upload_file(image_file) {
-        console.log(image_file.files[0])
-        html = $('#modalContent').html()
-        html += '<br><h3>正在上传...</h3>'
-        $('#modalContent').html(html)
+        console.log(image_file)
+        url = '/user/upload_avatar/'  //上传头像的接口
+        var request = new XMLHttpRequest()
+        request.open('POST', url, true)
+        request.onload = function () {
+            console.log(request.status, request.readyState)
+            result = request.responseText  // 获取响应的文本
+            result = JSON.parse(result)  // 将json字符串转成jsonc对象
+            if (result.code == 200) {
+                html = $('#modalContent').html()
+                html += '<h4>上传成功!</h4><img src="'+result.data.path+'" width=120 height=200>'
+                $('#modalContent').html(html)
+
+                image_path = result.data.path;
+            }
+        }
+
+        // 创建上传表单数据的对象
+        var formData = new FormData()  // content-type = multipart/form-data
+        formData.append('avatar', image_file)
+
+        // 发送请求
+        request.send(formData)
+
     }
 
     function avatar_upload() {
         $('#modalTitle').text('上传头像')
-        $('#modalContent').html('<input type="file" id="photo" onchange="upload_file(this)">')
+        $('#modalContent').html('<input type="file" id="photo" onchange="upload_file(this.files[0])">')
         $('#modalOKBtn').click(function () {
-            alert('开始上传')
+            // 更新头像-调用后端接口将临时上传的头像图片上传到OSS存储空间中
+            $.getJSON('/user/update_avatar/?filename='+image_path, function (data) {
+                 $('#avatar').attr('src', data.data.url)
+            })
+            $('#myModal').modal('hide')
         })
 
         $('#myModal').modal('show')
     }
-
 
 
 </script>
