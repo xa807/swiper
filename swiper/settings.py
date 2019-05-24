@@ -25,7 +25,7 @@ SECRET_KEY = 'm!^o&%y0x7u3jzldb1*=*70t17u%je7saugx)(8l!i_tu9-l0b'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'user',
     'food',
+    'djcelery',
 ]
 
 MIDDLEWARE = [
@@ -124,3 +125,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
+
+
+#############################
+# celery 配置信息 start
+#############################
+import djcelery
+djcelery.setup_loader()
+BROKER_URL = 'redis://127.0.0.1:6379/5'  # 消息管道(中间件)
+CELERY_IMPORTS = ('food.tasks', )
+CELERY_TIMEZONE = 'Asia/Shanghai'

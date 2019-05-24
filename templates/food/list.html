@@ -21,7 +21,7 @@
                                 <span style="margin-left: 2px">{{ food.practice }}/{{ food.taste }}/{{ food.steps_time }}</span>
                             </dd>
                             <dd class="text-center">
-                                <a class="btn btn-danger">免费报名</a>
+                                <a class="btn btn-danger" onclick="qbuy({{ food.id }}, this)">免费报名</a>
                             </dd>
                         </dl>
                     </li>
@@ -56,5 +56,29 @@
             </div>
         </div>
     </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var cid = 0;
+        function qbuy(food_id, btn) {
+            $.getJSON('/food/qbuy/?id='+food_id, function (data) {
+                $(btn).text(data.data)
+                if(data.code == 201){
+                    cid = setInterval(function () {
+                        $.getJSON('/food/query_qbuy/?id='+food_id, function (result) {
+                             $(btn).text(result.data)
+                            if(result.code !=201){
+                                 clearInterval(cid)
+                            }
+                        })
+                    }, 1000)
+                }
+            })
+        }
+
+    </script>
 
 {% endblock %}
