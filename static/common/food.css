@@ -1,0 +1,48 @@
+#food-main {
+    border: 1px dotted gray;
+    padding: 2px;
+}
+
+#food-main ul, li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+#food-list li{
+    float: left;
+    margin: 5px;
+    height: 300px;
+    box-shadow: 5px 5px 5px gray;
+    border-radius: 5px;
+}
+
+#food-main img {
+    width: 200px;
+    height: 200px;
+}
+
+#rank-prastice {
+    border: 1px solid red;
+    height: 200px;
+}
+
+#rank-total {
+    margin-top: 10px;
+    border: 1px solid red;
+    height: 200px;
+}
+
+#food-main h5 {
+    margin: 0px;
+    padding: 10px;
+    text-align: center;
+    background-color: lightgray;
+}
+#left-content .title {
+    display: inline-block;
+    font-size: 15px;
+    white-space:normal;
+    width:200px;
+    height: 40px;
+}

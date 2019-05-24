@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/common/food.css">
+{% endblock %}
+{% block content %}
+    <div class="row" id="food-main">
+        <div id="left-content" class="col-md-9">
+            <ul id="food-list">
+                {% for food in foods %}
+                    <li>
+                        <dl>
+                            <dt>
+                                <img src="{{ food.image }}">
+                            </dt>
+                            <dd class="text-center">
+                                <b><span class="title">{{ food.name }}</span></b>
+
+                            </dd>
+                            <dd>
+                                <span style="margin-left: 2px">{{ food.practice }}/{{ food.taste }}/{{ food.steps_time }}</span>
+                            </dd>
+                            <dd class="text-center">
+                                <a class="btn btn-danger">免费报名</a>
+                            </dd>
+                        </dl>
+                    </li>
+                {% endfor %}
+                <div class="clearfix"></div>
+            </ul>
+            <nav aria-label="Page navigation" class="text-center">
+                <ul class="pagination">
+                    <li>
+                        <a href="{% if page != 1 %}?page={{ page|add:-1 }}{% endif %}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    {% for page_num in page_range %}
+                        <li  {% if page_num == page %}class="active" {% endif %}><a href="?page={{ page_num }}">{{ page_num }}</a></li>
+                    {% endfor %}
+                    <li>
+                        <a href="{% if page != total_pages %}?page={{ page|add:1 }}{% endif %}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+        </div>
+        <div id="right-content" class="col-md-3">
+            <div id="rank-prastice">
+                <h5>推荐排行</h5>
+            </div>
+            <div id="rank-total">
+                <h5>人气排行</h5>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
