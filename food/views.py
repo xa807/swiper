@@ -28,3 +28,8 @@ def all(request):
     # 分页查询
     foods = Food.objects.raw('select * from t_food LIMIT %s, %s' %((page-1)*page_size, page_size))
     return render(request, 'food/list.html', locals())
+
+
+def detail(request, id):
+    food = Food.objects.get(pk=id)
+    return render(request, 'food/detail.html', locals())

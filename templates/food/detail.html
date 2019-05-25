@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/common/food.css">
+    <link rel="stylesheet" href="/static/common/detail.css">
+{% endblock %}
+
+{% block content %}
+    <div class="row" id="food-main">
+        <div id="left-content" class="col-md-9">
+
+            <div class="row">
+                <div class="col-md-4">
+                    <img src="{{ food.image }}" style="width: 240px; height: 240px">
+                </div>
+                <div class="col-md-8">
+                    <h3>{{ food.name }}</h3>
+                    <h4> 0 人评论 100人气 </h4>
+                    <h4>{{ food.steps }} / {{ food.steps_time }}</h4>
+                    <h4>{{ food.practice }}/{{ food.taste }}</h4>
+                    <div class="text-left" style="margin-top: 50px">
+                        <a class="btn btn-info">点赞</a>
+                        <a class="btn btn-danger">倒赞</a>
+                        <a class="btn btn-primary">收藏</a>
+                    </div>
+                </div>
+            </div>
+
+            <div style="height: 50px"></div>
+            <div style="padding-left: 50px;">
+                <h4>评论</h4>
+                <form action="#">
+                    <textarea style="width: 90%" rows="10"></textarea>
+                    <div class="text-left">
+                        <a class="btn btn-default">提交</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        <div id="right-content" class="col-md-3">
+            <div id="rank-prastice">
+                <h5>相关美食</h5>
+            </div>
+            <div id="rank-total">
+                <h5>人气排行</h5>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
