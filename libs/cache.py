@@ -44,3 +44,17 @@ def query_qbuy_state(uid, food_id):
         return 302, '已抢完'
 
     return 201, '抢购中'
+
+
+def add_total_rank(food_id, amount=1):
+    # 添加总排行
+    rd.zincrby('swiper.total.rank',
+               food_id,
+               amount)
+
+
+def get_total_rank(top_n=5):
+    rank_list = rd.zrevrange('swiper.total.rank',
+                             0, top_n-1, withscores=True)
+    return [(id_.decode(), int(amount))
+            for id_, amount in rank_list]

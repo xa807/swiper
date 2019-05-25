@@ -3,6 +3,34 @@
 {% block css %}
     <link rel="stylesheet" href="/static/common/food.css">
     <link rel="stylesheet" href="/static/common/detail.css">
+    <style>
+        #rank-total .no{
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background-color: lightgray;
+            padding: 5px;
+            color: white;
+            margin: 5px;
+            text-align: center;
+        }
+
+        #rank-total .no1 {
+            background-color: orangered;
+        }
+
+        #rank-total .no2 {
+            background-color: indianred;
+        }
+        #rank-total .no3 {
+            background-color: palevioletred;
+        }
+
+        #rank-total b{
+            display: inline-block;
+            width: 160px;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -42,8 +70,19 @@
             <div id="rank-prastice">
                 <h5>相关美食</h5>
             </div>
-            <div id="rank-total">
+            <div id="rank-total" style="height: 240px">
                 <h5>人气排行</h5>
+                <ul>
+                    {% for rank_food, amount in rank_list %}
+                        <li>
+                            <span class="{% if forloop.counter <= 3 %}no no{{ forloop.counter }}{% else %}no{% endif %}">{{ forloop.counter }}</span>
+                            <b><a href="/food/detail/{{ rank_food.id }}/">{{ rank_food.name }}</a></b>
+                            <i>{{ amount }}</i>
+                        </li>
+                    {% endfor %}
+                    <div class="clearfix"></div>
+                </ul>
+
             </div>
         </div>
     </div>
