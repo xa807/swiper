@@ -1,6 +1,6 @@
 from redis import Redis
 
-rd = Redis(host='localhost', db=1)
+rd = Redis(host='redis', db=1)
 
 
 def save_code(phone, code):

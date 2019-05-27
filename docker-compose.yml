@@ -1,0 +1,30 @@
+version: "2.0"
+services:
+  web:
+    image: swiper-server:1.0
+    container_name: swiper-server1
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/code
+    depends_on:
+      - redis
+      - es
+    links:
+      - redis
+      - es
+
+  redis:
+    image: redis:latest
+    hostname: redis-server
+    container_name: swiper-redis
+    ports:
+      - "6379:6379"
+
+  es:
+    image: elasticsearch:latest
+    hostname: es-server
+    container_name: swiper-es
+    ports:
+      - "9200:9200"
+      - "9300:9300"
