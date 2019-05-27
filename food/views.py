@@ -7,7 +7,7 @@ from food.models import Food
 from django.db import connection
 # Create your views here.
 from libs import cache
-
+from libs import search
 
 def all(request):
     # 分页算法
@@ -42,3 +42,13 @@ def detail(request, id):
     rank_list = [(Food.objects.get(pk=id_), amount) for id_, amount in rank_list]
 
     return render(request, 'food/detail.html', locals())
+
+
+def es_search(request):
+    # 搜索功能的API
+    params = request.GET if request.method == 'GET' else request.POST
+
+    s = params.get('s')
+    foods = search.search_doc(s)
+
+    return render(request, 'food/search_result.html', locals())

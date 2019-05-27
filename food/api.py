@@ -3,6 +3,7 @@ from common.http import render_json
 from libs import cache
 
 
+
 def qbuy(request):
     # 1. 验证用户是否已登录
     login_user = request.session.get('login_user', None)

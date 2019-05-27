@@ -8,5 +8,6 @@ urlpatterns = [
     path('qbuy/', api.qbuy),
     path('query_qbuy/', api.query_qbuy_state),
     path('detail/<int:id>/', views.detail),
+    path('search/', views.es_search),
 
 ]

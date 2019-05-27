@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+
+{% block css %}
+    <link rel="stylesheet" href="/static/common/food.css">
+{% endblock %}
+{% block content %}
+    <div class="row" id="food-main">
+        <div id="left-content" class="col-md-9">
+            <ul id="food-list">
+                {% for food in foods %}
+                    <li>
+                        <dl>
+                            <dt>
+                               <a href="/food/detail/{{ food.id }}/"> <img src="{{ food.image }}"></a>
+                            </dt>
+                            <dd class="text-center">
+                                <b><span class="title">{{ food.name }}</span></b>
+
+                            </dd>
+                            <dd>
+                                <span style="margin-left: 2px">{{ food.practice }}/{{ food.taste }}/{{ food.steps_time }}</span>
+                            </dd>
+                        </dl>
+                    </li>
+                {% endfor %}
+                <div class="clearfix"></div>
+            </ul>
+
+        </div>
+        <div id="right-content" class="col-md-3">
+            <div id="rank-prastice">
+                <h5>推荐排行</h5>
+            </div>
+            <div id="rank-total">
+                <h5>人气排行</h5>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+{% block js %}
+
+    <script>
+        var cid = 0;
+        function qbuy(food_id, btn) {
+            $.getJSON('/food/qbuy/?id='+food_id, function (data) {
+                $(btn).text(data.data)
+                if(data.code == 201){
+                    cid = setInterval(function () {
+                        $.getJSON('/food/query_qbuy/?id='+food_id, function (result) {
+                             $(btn).text(result.data)
+                            if(result.code !=201){
+                                 clearInterval(cid)
+                            }
+                        })
+                    }, 1000)
+                }
+            })
+        }
+    </script>
+
+{% endblock %}
