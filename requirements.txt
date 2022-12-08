@@ -5,7 +5,7 @@ amqp==1.4.9
 anyjson==0.3.3
 billiard==3.3.0.23
 celery==3.1.26.post2
-certifi==2019.3.9
+certifi==2022.12.7
 chardet==3.0.4
 crcmod==1.7
 Django==2.2.1
